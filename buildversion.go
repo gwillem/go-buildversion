@@ -1,6 +1,7 @@
 package buildversion
 
 import (
+	"fmt"
 	"runtime/debug"
 	"time"
 )
@@ -13,6 +14,10 @@ type (
 		Modified bool
 		VCS      string
 	}
+)
+
+const (
+	timestampFormat = "20060102"
 )
 
 func Get() BuildVersion {
@@ -37,5 +42,15 @@ func Get() BuildVersion {
 			}
 		}
 	}
+
+	if bv.Time.IsZero() {
+		bv.Time = time.Now()
+		bv.Commit = "DEV"
+	}
 	return bv
+}
+
+func String() string {
+	bv := Get()
+	return fmt.Sprintf("%s-%s", bv.Time.Format(timestampFormat), bv.Commit)
 }
