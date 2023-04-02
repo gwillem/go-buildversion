@@ -52,5 +52,5 @@ func Get() BuildVersion {
 
 func String() string {
 	bv := Get()
-	return fmt.Sprintf("%s-%s", bv.Time.Format(timestampFormat), bv.Commit)
+	return fmt.Sprintf("%s-%-0.7s", bv.Time.Format(timestampFormat), bv.Commit)
 }
